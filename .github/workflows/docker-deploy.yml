@@ -66,7 +66,7 @@ jobs:
           image-ref: ${{ env.IMAGE_NAME }}:scan
           exit-code: '1'
           ignore-unfixed: true
-          severity: 'CRITICAL,HIGH' # <--- Correction : pas d'espace ici
+          severity: 'CRITICAL,HIGH'
 
   push-image:
     name: Push Docker Image
