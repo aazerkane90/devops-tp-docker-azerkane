@@ -1,44 +1,35 @@
-# Utiliser une version spécifique (pas latest)
-FROM nginx:1.25.4-alpine
+# Utiliser une version spécifique (pas latest) [cite: 270]
+FROM nginx:1.25.3-alpine
 
-# Métadonnées
+# Métadonnées [cite: 271-274]
 LABEL maintainer="TP DevOps"
 LABEL description="Application DevOps sécurisée"
-LABEL org.opencontainers.image.source="https://github.com/[username]/[repo]"
 
-# Créer un utilisateur non-root
-RUN addgroup -g 1000 -S appgroup && \
-    adduser -u 1000 -S appuser -G appgroup
+# Créer un utilisateur non-root [cite: 275-277]
+RUN addgroup -S appgroup && \
+    adduser -S appuser -G appgroup
 
-# Installer uniquement les dépendances nécessaires
-RUN apk add --no-cache \
-    ca-certificates \
-    && rm -rf /var/cache/apk/*
+# Installer les dépendances nécessaires et nettoyer le cache [cite: 279-281]
+RUN apk add --no-cache ca-certificates && \
+    rm -rf /var/cache/apk/*
 
-# Copier la configuration Nginx
+# Copier les fichiers avec les bonnes permissions [cite: 283-285]
 COPY --chown=appuser:appgroup nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copier les fichiers de l'application
 COPY --chown=appuser:appgroup src/ /usr/share/nginx/html/
 
-# Définir les permissions appropriées
-RUN chown -R appuser:appgroup /usr/share/nginx/html && \
-    chmod -R 755 /usr/share/nginx/html
-
-# Modifier les permissions pour nginx
+# Configurer les dossiers pour l'utilisateur non-root [cite: 290-292]
 RUN touch /var/run/nginx.pid && \
     chown -R appuser:appgroup /var/run/nginx.pid && \
     chown -R appuser:appgroup /var/cache/nginx
 
-# Passer à l'utilisateur non-root
+# Passer à l'utilisateur non-root [cite: 293-294]
 USER appuser
 
-# Exposer le port
-EXPOSE 8081
+# Exposer le port 8080 (requis pour l'utilisateur non-root) [cite: 295-296]
+EXPOSE 8080
 
-# Health check
+# Health check [cite: 297-299]
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --quiet --tries=1 --spider http://localhost:8080/ || exit 1
+  CMD wget --quiet --tries=1 --spider http://localhost:8080/ || exit 1
 
-# Commande de démarrage
 CMD ["nginx", "-g", "daemon off;"]
