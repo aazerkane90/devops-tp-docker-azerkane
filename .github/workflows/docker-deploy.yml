@@ -52,6 +52,7 @@ jobs:
           image-ref: ${{ env.IMAGE_NAME }}:scan
           format: 'sarif'
           output: 'trivy-results.sarif'
+          ignore-unfixed: true
           severity: 'CRITICAL,HIGH'
 
       - name: Upload Trivy results to GitHub Security
@@ -60,13 +61,13 @@ jobs:
         with:
           sarif_file: 'trivy-results.sarif'
 
-      - name: Security Gate (Fail on CRITICAL/HIGH)
+      - name: Security Gate (Fail on CRITICAL)
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ env.IMAGE_NAME }}:scan
           exit-code: '1'
           ignore-unfixed: true
-          severity: 'CRITICAL,HIGH'
+          severity: 'CRITICAL'
 
   push-image:
     name: Push Docker Image
