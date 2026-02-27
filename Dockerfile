@@ -8,9 +8,10 @@ LABEL description="Application DevOps sécurisée sur port 8081"
 RUN addgroup -S appgroup && \
     adduser -S appuser -G appgroup
 
-# Installation des certificats et nettoyage
-RUN apk add --no-cache ca-certificates && \
-    rm -rf /var/cache/apk/*
+# Mise a jour des paquets systeme pour corriger les CVE critiques
+RUN apk update && \
+    apk upgrade --no-cache && \
+    apk add --no-cache ca-certificates
 
 # Copie des fichiers avec les bonnes permissions
 COPY --chown=appuser:appgroup nginx/nginx.conf /etc/nginx/conf.d/default.conf
