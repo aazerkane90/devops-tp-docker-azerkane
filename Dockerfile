@@ -1,5 +1,5 @@
 # Utilisation d'une version stable et légère
-FROM nginx:1.27-alpine
+FROM nginx:1.29-alpine
 
 LABEL maintainer="TP DevOps"
 LABEL description="Application DevOps sécurisée sur port 8081"
