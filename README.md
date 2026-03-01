@@ -1,8 +1,8 @@
 # devops-tp-docker-azerkane
 # TP DevSecOps avec Docker
 
-![Build and Scan](https://github.com/[username]/devops-tp-docker-[nom]/actions/workflows/docker-deploy.yml/badge.svg)
-![CodeQL](https://github.com/[username]/devops-tp-docker-[nom]/actions/workflows/codeql-analysis.yml/badge.svg)
+![Build and Scan](https://github.com/[username]/devops-tp-docker-azerkane/actions/workflows/docker-deploy.yml/badge.svg)
+![CodeQL](https://github.com/[username]/devops-tp-docker-azerkane/actions/workflows/codeql-analysis.yml/badge.svg)
 
 ## Pipeline DevSecOps
 
